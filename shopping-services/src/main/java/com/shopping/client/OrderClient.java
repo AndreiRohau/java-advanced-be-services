@@ -23,7 +23,7 @@ public class OrderClient {
     public List<Order> getOrders(int userId){
         logger.info("OrderClient calling the OrderService method");
         OrderRequest orderRequest = OrderRequest.newBuilder().setUserId(userId).build();
-       OrderResponse orderResponse =  orderServiceBlockingStub.getOrdersForUser(orderRequest);
-       return orderResponse.getOrderList();
+        OrderResponse orderResponse =  orderServiceBlockingStub.getOrdersForUser(orderRequest);
+        return orderResponse.getOrderList();
     }
 }

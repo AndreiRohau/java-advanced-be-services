@@ -20,14 +20,15 @@ public class OrderServiceImpl extends OrderServiceGrpc.OrderServiceImplBase {
     public void getOrdersForUser(OrderRequest request, StreamObserver<OrderResponse> responseObserver) {
         List<Order> orders = orderDao.getOrders(request.getUserId());
         logger.info("Got orders from OrderDao and converting to OrderResponse proto objects");
-        List<com.shopping.stubs.order.Order> ordersForUser =
-                orders.stream().map(order -> com.shopping.stubs.order.Order.newBuilder()
-        .setUserId(order.getUserId())
-        .setOrderId(order.getOrderId())
-        .setNoOfItems(order.getNoOfItems())
-        .setTotalAmount(order.getTotalAmount())
-        .setOrderDate(Timestamps.fromMillis(order.getOrderDate().getTime())).build())
+        List<com.shopping.stubs.order.Order> ordersForUser = orders.stream()
+                .map(order -> com.shopping.stubs.order.Order.newBuilder()
+                        .setUserId(order.getUserId())
+                        .setOrderId(order.getOrderId())
+                        .setNoOfItems(order.getNoOfItems())
+                        .setTotalAmount(order.getTotalAmount())
+                        .setOrderDate(Timestamps.fromMillis(order.getOrderDate().getTime())).build())
                 .collect(Collectors.toList());
+
         OrderResponse orderResponse = OrderResponse.newBuilder().addAllOrder(ordersForUser).build();
         responseObserver.onNext(orderResponse);
         responseObserver.onCompleted();
