@@ -11,3 +11,12 @@ that sends a request to the simple server, gets a response, and prints it. Use t
 Start a server and try to communicate with it using the clients you just wrote.
 
 
+
+RUN
+mvn clean install
+run SimpleServer
+run SimpleJavaGrpcClient
+then check logs
+
+
+
