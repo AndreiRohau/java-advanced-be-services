@@ -5,5 +5,10 @@ Create a simple Kafka consumer which listens to a topic for a message, deseriali
 Start Kafka, create a topic, and run consumer and producer.
 Try to use different Avro schemas for serialization and deserialization. Include Avro schema version/id into the massage so a client can understand which schema to use.
 
+---
 
 
+topic=customer-avro
+
+check video on issues
+https://www.youtube.com/watch?v=_6HTHH1NCK0
