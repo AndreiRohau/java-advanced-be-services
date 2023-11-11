@@ -33,7 +33,7 @@ public class ServiceControllerImpl implements ServiceController {
     }
 
     @Override
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<SubscriptionResponseDto> updateSubscription(@RequestBody SubscriptionRequestDto subscriptionRequestDto) {
         log.info("ServiceControllerImpl#updateSubscription(" + subscriptionRequestDto + ")");
         Subscription subscription = converter.convert(subscriptionRequestDto, Subscription.class);
