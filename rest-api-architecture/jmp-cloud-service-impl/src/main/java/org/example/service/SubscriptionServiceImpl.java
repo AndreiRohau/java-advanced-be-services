@@ -1,11 +1,12 @@
 package org.example.service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.entity.Subscription;
 import org.example.entity.User;
 import org.example.exception.CustomException;
 import org.example.repository.SubscriptionRepository;
 import org.example.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,12 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final SubscriptionRepository subscriptionRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Subscription save(Subscription subscription) {
@@ -40,8 +40,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public void delete(Long id) {
-        subscriptionRepository.deleteById(id);
-        // todo throw custom error if user not exists or better catch silently and return 204
+        try {
+            subscriptionRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new CustomException("Subscription not found, id=" + id, HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
